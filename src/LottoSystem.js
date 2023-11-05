@@ -4,11 +4,13 @@ class LottoSystem {
   #purchaseAmount;
   #countLotto;
   #issuedLottos;
+  #winningNumbers;
 
   constructor() {
     this.#purchaseAmount = null;
     this.#countLotto = 0;
     this.#issuedLottos = null;
+    this.#winningNumbers = null;
   }
 
   start = async () => {
@@ -16,6 +18,8 @@ class LottoSystem {
     this.#getCountLotto(this.#purchaseAmount);
     this.#issueLottos(this.#countLotto);
     this.#printIssuedLottos();
+
+    await this.#getWinningNumbers();
   };
 
   #getPurchaseAmount = async () => {
@@ -61,6 +65,22 @@ class LottoSystem {
       Console.print(lotto.toString());
     });
     Console.print("");
+  };
+
+  #getWinningNumbers = async () => {
+    let lotto = null;
+    while (!this.#winningNumbers) {
+      try {
+        const input = await Console.readLineAsync(
+          "당첨 번호를 입력해 주세요.\n"
+        );
+        const numbers = input.split(",").map(Number);
+        lotto = new Lotto(numbers);
+      } catch (err) {
+        Console.print(err.message);
+      }
+      this.#winningNumbers = lotto;
+    }
   };
 }
 
