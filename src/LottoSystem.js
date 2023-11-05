@@ -15,6 +15,7 @@ class LottoSystem {
     await this.#getPurchaseAmount();
     this.#getCountLotto(this.#purchaseAmount);
     this.#issueLottos(this.#countLotto);
+    this.#printIssuedLottos();
   };
 
   #getPurchaseAmount = async () => {
@@ -51,6 +52,15 @@ class LottoSystem {
   #issueSingleLotto = () => {
     const randomNumbers = Random.pickUniqueNumbersInRange(1, 45, 6);
     return new Lotto(randomNumbers);
+  };
+
+  #printIssuedLottos = () => {
+    Console.print("");
+    Console.print(`${this.#countLotto}개를 구매했습니다.`);
+    this.#issuedLottos.forEach((lotto) => {
+      Console.print(lotto.toString());
+    });
+    Console.print("");
   };
 }
 
