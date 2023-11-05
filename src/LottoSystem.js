@@ -76,11 +76,12 @@ class LottoSystem {
         );
         const numbers = input.split(",").map(Number);
         lotto = new Lotto(numbers);
+        this.#winningNumbers = lotto;
       } catch (err) {
         Console.print(err.message);
       }
-      this.#winningNumbers = lotto;
     }
+    Console.print("");
   };
 }
 
