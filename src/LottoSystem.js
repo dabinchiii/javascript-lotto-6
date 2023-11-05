@@ -5,12 +5,14 @@ class LottoSystem {
   #countLotto;
   #issuedLottos;
   #winningNumbers;
+  #bonusNumber;
 
   constructor() {
     this.#purchaseAmount = null;
     this.#countLotto = 0;
     this.#issuedLottos = null;
     this.#winningNumbers = null;
+    this.#bonusNumber = null;
   }
 
   start = async () => {
@@ -20,6 +22,7 @@ class LottoSystem {
     this.#printIssuedLottos();
 
     await this.#getWinningNumbers();
+    await this.#getBonusNumber();
   };
 
   #getPurchaseAmount = async () => {
@@ -82,6 +85,24 @@ class LottoSystem {
       }
     }
     Console.print("");
+  };
+
+  #getBonusNumber = async () => {
+    let number = null;
+    while (!this.#bonusNumber) {
+      try {
+        const input = await Console.readLineAsync(
+          "보너스 번호를 입력해 주세요.\n"
+        );
+        number = Number(input);
+        if (isNaN(number) || number < 0 || number > 45) {
+          throw new Error("[ERROR] 보너스 번호는 1~45의 정수여야 합니다.");
+        }
+        this.#bonusNumber = number;
+      } catch (err) {
+        Console.print(err.message);
+      }
+    }
   };
 }
 
